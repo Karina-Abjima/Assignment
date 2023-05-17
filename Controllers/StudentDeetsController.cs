@@ -67,6 +67,7 @@ namespace StudentAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+       
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +81,10 @@ namespace StudentAPI.Controllers
                 }
             }
 
-            return NoContent();
+            
         }
+
+        
 
         // POST: api/StudentDeets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -94,6 +97,7 @@ namespace StudentAPI.Controllers
                 return Problem("Entity set 'StudentContext.StudentDeets'  is null.");
 
             }
+
             //var students = _mapper.Map<StudentDeet>(studentDto);
             //_context.StudentDeets.Add(students);
             //await _context.SaveChangesAsync();
