@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StudentAPI.Entities;
 using StudentAPI.Models;
+
 
 namespace StudentAPI.Controllers
 {
@@ -14,31 +12,36 @@ namespace StudentAPI.Controllers
     public class StudentDeetsController : ControllerBase
     {
         private readonly StudentContext _context;
+        private readonly IMapper _mapper;
 
-        public StudentDeetsController(StudentContext context)
+        public StudentDeetsController(StudentContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/StudentDeets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentDeet>>> GetStudentDeets()
+        public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudentDeets()
         {
-          if (_context.StudentDeets == null)
-          {
-              return NotFound();
-          }
-            return await _context.StudentDeets.ToListAsync();
+            if (_context.StudentDeets == null)
+            {
+                return NotFound();
+            }
+            var student = await _context.StudentDeets.ToListAsync();
+            var mappeditem = _mapper.Map<List<StudentDto>>(student);
+            return Ok(mappeditem);
+
         }
 
         // GET: api/StudentDeets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<StudentDeet>> GetStudentDeet(int id)
         {
-          if (_context.StudentDeets == null)
-          {
-              return NotFound();
-          }
+            if (_context.StudentDeets == null)
+            {
+                return NotFound();
+            }
             var studentDeet = await _context.StudentDeets.FindAsync(id);
 
             if (studentDeet == null)
@@ -83,14 +86,17 @@ namespace StudentAPI.Controllers
         // POST: api/StudentDeets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<StudentDeet>> PostStudentDeet(StudentDeet studentDeet)
+        public async Task<ActionResult<StudentDto>> PostStudentDeet(StudentDto studentDeet)
         {
-          if (_context.StudentDeets == null)
-          {
-              return Problem("Entity set 'StudentContext.StudentDeets'  is null.");
-          }
-            _context.StudentDeets.Add(studentDeet);
-            await _context.SaveChangesAsync();
+           // StudentDto studentDto;
+            if (_context.StudentDeets == null)
+            {
+                return Problem("Entity set 'StudentContext.StudentDeets'  is null.");
+
+            }
+            //var students = _mapper.Map<StudentDeet>(studentDto);
+            //_context.StudentDeets.Add(students);
+            //await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStudentDeet", new { id = studentDeet.Id }, studentDeet);
         }

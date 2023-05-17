@@ -8,6 +8,7 @@ namespace StudentAPI.Profiles
     {
         public AutoMapper() {
             CreateMap<StudentDeet, StudentDto>();
+            CreateMap<StudentDto, StudentDeet>();
         }
     }
 }

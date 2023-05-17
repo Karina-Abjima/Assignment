@@ -10,7 +10,7 @@ namespace StudentAPI.Models
         public StudentContext()
         {
         }
-
+         
         public StudentContext(DbContextOptions<StudentContext> options)
             : base(options)
         {
