@@ -67,7 +67,7 @@ namespace StudentAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-       
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,10 +81,8 @@ namespace StudentAPI.Controllers
                 }
             }
 
-            
+            return NoContent();
         }
-
-        
 
         // POST: api/StudentDeets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
