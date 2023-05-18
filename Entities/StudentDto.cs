@@ -7,8 +7,6 @@ namespace StudentAPI.Entities
     public  class StudentDto
 
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int Id { get; set; }
         [Required]

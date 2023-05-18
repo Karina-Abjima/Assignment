@@ -7,7 +7,7 @@ using StudentAPI.Models;
 
 namespace StudentAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     [ApiController]
     public class StudentDeetsController : ControllerBase
     {
@@ -67,7 +67,6 @@ namespace StudentAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,7 +94,6 @@ namespace StudentAPI.Controllers
                 return Problem("Entity set 'StudentContext.StudentDeets'  is null.");
 
             }
-
             //var students = _mapper.Map<StudentDeet>(studentDto);
             //_context.StudentDeets.Add(students);
             //await _context.SaveChangesAsync();
@@ -128,4 +126,5 @@ namespace StudentAPI.Controllers
             return (_context.StudentDeets?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
+    
 }

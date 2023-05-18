@@ -5,10 +5,9 @@ using StudentAPI.Entities;
 namespace StudentAPI.Profiles
 {
     public class AutoMapper:Profile
-    {
+    { 
         public AutoMapper() {
-            CreateMap<StudentDeet, StudentDto>();
-            CreateMap<StudentDto, StudentDeet>();
+            CreateMap<StudentDeet, StudentDto>();//.ForMember()
         }
     }
 }
