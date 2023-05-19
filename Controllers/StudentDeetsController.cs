@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentAPI.Entities;
 using StudentAPI.Models;
+using StudentAPI.Services;
 
 
 namespace StudentAPI.Controllers
@@ -13,11 +14,12 @@ namespace StudentAPI.Controllers
     {
         private readonly StudentContext _context;
         private readonly IMapper _mapper;
-
-        public StudentDeetsController(StudentContext context, IMapper mapper)
+        private readonly IStudentRepository _studentRepository;
+        public StudentDeetsController(StudentContext context, IMapper mapper, IStudentRepository studentRepository)
         {
             _context = context;
             _mapper = mapper;
+            _studentRepository = studentRepository;
         }
 
         // GET: api/StudentDeets

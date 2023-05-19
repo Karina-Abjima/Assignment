@@ -18,7 +18,7 @@ namespace StudentAPI.Services
 
             public async Task<IEnumerable<StudentDeet>> GetStudentsAsync()
             {
-                return await _context.StudentsDto.ToListAsync();
+                return await _context.ControllerBase.ToListAsync();
             }
 
             public Task<StudentDeet> AddStudentAsync(StudentDeet studentData)
