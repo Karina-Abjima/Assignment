@@ -16,7 +16,7 @@ namespace StudentAPI.Models
         {
         }
 
-        public virtual DbSet<StudentDeet> StudentDeets { get; set; } = null!;
+        public virtual DbSet<StudentDeet> ControllerBase { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
