@@ -7,6 +7,7 @@ namespace StudentAPI.Entities
     public  class StudentDto
 
     {
+        
 
         public int Id { get; set; }
         [Required]

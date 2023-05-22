@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using StudentAPI.Entities;
 using StudentAPI.Models;
 using StudentAPI.Services;
+using System.Linq;
+using System.Collections.Generic;
 
 
 namespace StudentAPI.Controllers
 {
     [Route("api/[controller]")] 
     [ApiController]
-    public class StudentDeetsController : Controller//as needed a view support for future
+    public class StudentDeetsController : ControllerBase//as needed a view support for future
     {
         private readonly StudentContext _context;
         private readonly IMapper _mapper;
@@ -26,38 +28,43 @@ namespace StudentAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudentDeets()
         {
-            if (_context.ControllerBase== null)
+            if (_context.StudentDeet== null)
             {
                 return NotFound();
             }
-            var student = await _context.ControllerBase.ToListAsync();
-            var mappeditem = _mapper.Map<List<StudentDto>>(student);
-            return Ok(mappeditem);
-
+            var student = await _studentRepository.GetStudents();
+          //  var mappeditem = _mapper.Map<StudentDto>(student);
+            return Ok(_mapper.Map<IEnumerable<StudentDto>>(student));
+           
         }
+
+        
 
         // GET: api/StudentDeets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentDeet>> GetStudentDeet(int id)
+        public async Task<ActionResult<StudentDeets>> GetStudentDeet(int id)
         {
-            if (_context.ControllerBase == null)
+            if (_context.StudentDeet == null)
             {
                 return NotFound();
             }
-            var studentDeet = await _context.ControllerBase.FindAsync(id);
-
+            var studentDeet = await _context.StudentDeet.FindAsync(id);
             if (studentDeet == null)
             {
                 return NotFound();
             }
 
-            return studentDeet;
+           
+            var item1 = _mapper.Map<StudentDeets>(id);
+            return Ok(item1);
+
+           
         }
 
         // PUT: api/StudentDeets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=212375 4
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudentDeet(int id, StudentDeet studentDeet)
+        public async Task<IActionResult> PutStudentDeet(int id, StudentDeets studentDeet)
         {
             if (id != studentDeet.Id)
             {
@@ -91,7 +98,7 @@ namespace StudentAPI.Controllers
         public async Task<ActionResult<StudentDto>> PostStudentDeet(StudentDto studentDeet)
         {
            // StudentDto studentDto;
-            if (_context.ControllerBase == null)
+            if (_context.StudentDeet == null)
             {
                 return Problem("Entity set 'StudentContext.StudentDeets'  is null.");
 
@@ -112,17 +119,17 @@ namespace StudentAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudentDeet(int id)
         {
-            if (_context.ControllerBase == null)
+            if (_context.StudentDeet == null)
             {
                 return NotFound();
             }
-            var studentDeet = await _context.ControllerBase.FindAsync(id);
+            var studentDeet = await _context.StudentDeet.FindAsync(id);
             if (studentDeet == null)
             {
                 return NotFound();
             }
 
-            _context.ControllerBase.Remove(studentDeet);
+            _context.StudentDeet.Remove(studentDeet);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -130,7 +137,7 @@ namespace StudentAPI.Controllers
 
         private bool StudentDeetExists(int id)
         {
-            return (_context.ControllerBase?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.StudentDeet?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
     

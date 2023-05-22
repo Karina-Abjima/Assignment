@@ -7,7 +7,9 @@ namespace StudentAPI.Profiles
     public class AutoMapper:Profile
     { 
         public AutoMapper() {
-            CreateMap<StudentDeet, StudentDto>();//.ForMember()
+            CreateMap<StudentDeets, StudentDto>();
+            CreateMap<StudentDto, StudentDeets>();
+       
         }
     }
 }
